@@ -39,23 +39,7 @@ type SnakeGameState struct {
 	FoodLocation   Coordinate
 }
 
-// The user inputs move direction W (Up) S (Down) A (Left) D (Right) or inputs nothing to keep going in current direction
-// The function returns string "W" "A" "S" "D" or ""
-func RequireNewMove() string {
-
-	fmt.Printf("Input new direction and press the Enter key: ")
-	userInput := bufio.NewScanner(os.Stdin)
-	userInput.Scan()
-	userChoice := strings.ToUpper(userInput.Text())
-
-	if userChoice == "W" || userChoice == "S" || userChoice == "A" || userChoice == "D" {
-		return userChoice
-	}
-
-	return ""
-}
-
-// This function takes dimensions given as program execution arguments (if any) as input
+// This function takes dimensions given from program execution arguments (if any) as input
 // Otherwise the default board dimension are used
 // The function returns the initial game state
 func InitializeGameState(args []string) SnakeGameState {
@@ -108,6 +92,22 @@ func InitializeGameState(args []string) SnakeGameState {
 	state.Board[state.SnakeBody[0].y][state.SnakeBody[0].x] = Body
 
 	return state
+}
+
+// The user inputs move direction W (Up) S (Down) A (Left) D (Right) or inputs nothing to keep going in current direction
+// The function returns string "W" "A" "S" "D" or ""
+func RequireNewMove() string {
+
+	fmt.Printf("Input new direction and press the Enter key: ")
+	userInput := bufio.NewScanner(os.Stdin)
+	userInput.Scan()
+	userChoice := strings.ToUpper(userInput.Text())
+
+	if userChoice == "W" || userChoice == "S" || userChoice == "A" || userChoice == "D" {
+		return userChoice
+	}
+
+	return ""
 }
 
 // This function takes as input the current state and move, it updates the SnakeGameState
@@ -188,7 +188,7 @@ func UpdateGameState(state *SnakeGameState, move string) bool {
 
 }
 
-// This function takes state as input and prints board state to console
+// This function takes state as input and prints board state to terminal
 func DisplayGameState(state SnakeGameState) {
 	// Display top border as an line of underscores (_)
 	topBorder := " "
